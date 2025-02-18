@@ -1,30 +1,27 @@
 """
-Combination Sum IV
------------------
-Given an array of distinct integers nums and a target integer target,
-return the number of possible combinations that add up to target.
+Check if There is a Valid Partition For The Array
+-----------------------------------------------
+Given an array nums, check if there exists a valid partition where each subset satisfies:
+1. Exactly 2 equal elements, or
+2. Exactly 3 equal elements, or
+3. Exactly 3 consecutive increasing elements (difference of 1)
 
-The problem is different from other combination sum problems because:
-1. Order matters (each different sequence is counted as a unique combination)
-2. Elements can be reused unlimited times
-3. All numbers in nums are positive
+Return true if partition exists, false otherwise.
 """
 
-
-def combinationSum4_recursive(nums, target):
+def validPartition_recursive(nums):
     """
     Approach 1: Basic Recursive Solution (Brute Force)
     ------------------------------------------------
-    - Try each number at each step
-    - Recursively find combinations for remaining target
-    - Sum up all possible combinations
+    - Try all possible partitioning options at each step
+    - Check if any combination leads to valid partition
 
-    Time Complexity: O(n^target) where n is length of nums
-        - At each step, we try n numbers
-        - Maximum depth is target (worst case using 1's)
+    Time Complexity: O(3^n)
+        - At each step, we have up to 3 choices
+        - Tree height could be n in worst case
 
-    Space Complexity: O(target)
-        - Recursion stack depth is proportional to target
+    Space Complexity: O(n)
+        - Recursion stack depth
     """
     n = len(nums)
 
@@ -40,22 +37,20 @@ def combinationSum4_recursive(nums, target):
         return False
 
     return dfs(0)
-
-
-def combinationSum4_memoization(nums, target):
+def validPartition_memoization(nums):
     """
-    Approach 2: Top-down Dynamic Programming (Recursive with Memoization)
-    ------------------------------------------------------------------
-    - Cache results for each target value
+    Approach 2: Top-down Dynamic Programming (Memoization)
+    ---------------------------------------------------
+    - Cache results for each starting index
     - Avoid recalculating same subproblems
 
-    Time Complexity: O(n * target)
-        - Each target value is computed once
-        - For each target, we try n numbers
+    Time Complexity: O(n)
+        - Each index is computed once
+        - Constant work for checking each partition
 
-    Space Complexity: O(target)
-        - Memoization cache stores results for each target value
-        - Recursion stack depth is proportional to target
+    Space Complexity: O(n)
+        - Memoization cache stores result for each index
+        - Recursion stack depth is O(n)
     """
     n = len(nums)
     memo = {}
@@ -80,21 +75,19 @@ def combinationSum4_memoization(nums, target):
 
     return dfs(0)
 
-
-def combinationSum4_tabulation(nums, target):
+def validPartition_tabulation(nums):
     """
     Approach 3: Bottom-up Dynamic Programming (Tabulation)
     ---------------------------------------------------
-    - Build solution iteratively using a table
-    - dp[i] = number of combinations that sum to i
-    - For each target value, consider adding each number
+    - Build solution iteratively using boolean array
+    - dp[i] = whether valid partition exists for nums[0:i]
 
-    Time Complexity: O(n * target)
-        - Fill dp table up to target
-        - For each value, try each number in nums
+    Time Complexity: O(n)
+        - Single pass through array
+        - Constant work for checking each partition
 
-    Space Complexity: O(target)
-        - DP table stores result for each value up to target
+    Space Complexity: O(n)
+        - DP array stores result for each index
     """
     n = len(nums)
     dp = [False] * (n + 1)
@@ -108,48 +101,88 @@ def combinationSum4_tabulation(nums, target):
             dp[i] = True
     return dp[n]
 
+def validPartition_optimized(nums):
+    """
+    Approach 4: Space-Optimized Dynamic Programming
+    --------------------------------------------
+    - Only need last three states for dp
+    - Use rolling array technique
 
-def test_combinations():
+    Time Complexity: O(n)
+        - Single pass through array
+
+    Space Complexity: O(1)
+        - Only store three previous states
+    """
+    n = len(nums)
+    if n < 2:
+        return False
+
+    # Keep track of last 3 states
+    dp = [True, False, False, False]  # dp[0] is dummy value
+
+    for i in range(2, n + 1):
+        current = False
+
+        # Check partition of size 2
+        if i >= 2:
+            current = current or (
+                dp[(i-2) % 4] and nums[i-1] == nums[i-2]
+            )
+
+        # Check partition of size 3
+        if i >= 3:
+            current = current or (
+                dp[(i-3) % 4] and (
+                    nums[i-1] == nums[i-2] == nums[i-3] or
+                    (nums[i-2] == nums[i-3] + 1 and
+                     nums[i-1] == nums[i-2] + 1)
+                )
+            )
+
+        dp[i % 4] = current
+
+    return dp[n % 4]
+
+def test_valid_partition():
     """
     Test function to verify all implementations
     """
     test_cases = [
-        ([1, 2, 3], 4, 7),
-        ([9], 3, 0),
-        ([1, 2, 3], 32, 181997601),
-        ([3, 1, 2, 4], 4, 8),
-        ([1, 2], 10, 89),
+        ([4,4,4,5,6], True),
+        ([1,1,1,2], False),
+        ([1,1], True),
+        ([1,2], False),
+        ([1,1,1,1,1], True),
+        ([1,2,3,4], False),
+        ([1,1,1,2,2,2], True),
     ]
 
     solutions = [
-        (combinationSum4_recursive, "Recursive (Brute Force)"),
-        (combinationSum4_memoization, "Memoization"),
-        (combinationSum4_tabulation, "Tabulation")
+        (validPartition_recursive, "Recursive (Brute Force)"),
+        (validPartition_memoization, "Memoization"),
+        (validPartition_tabulation, "Tabulation"),
+        (validPartition_optimized, "Space Optimized")
     ]
 
-    for i, (nums, target, expected) in enumerate(test_cases):
-        print(f"\nTest case {i + 1}:")
-        print(f"nums = {nums}, target = {target}")
+    for i, (nums, expected) in enumerate(test_cases):
+        print(f"\nTest case {i + 1}: nums = {nums}")
         print(f"Expected: {expected}")
 
         for solution, name in solutions:
-            # Skip brute force for large targets
-            if name == "Recursive (Brute Force)" and target > 10:
-                print(f"{name}: Skipped (too slow for large target)")
+            # Skip brute force for larger arrays
+            if name == "Recursive (Brute Force)" and len(nums) > 10:
+                print(f"{name}: Skipped (too slow for large input)")
                 continue
 
-            result = solution(nums, target)
+            result = solution(nums)
             status = "✓" if result == expected else "✗"
             print(f"{name}: {result} {status}")
 
-
 if __name__ == "__main__":
-    # Example usage
-    nums = [1, 2, 3]
-    target = 4
-
-    print("\nExample with nums =", nums, "target =", target)
-    print("Combinations that sum to", target, ":", combinationSum4_tabulation(nums, target))
+    nums = [4,4,4,5,6]
+    print(f"\nChecking valid partition for {nums}:")
+    print(f"Using optimized DP: {validPartition_optimized(nums)}")
 
     print("\nRunning all test cases:")
-    test_combinations()
+    test_valid_partition()
