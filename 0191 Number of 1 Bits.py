@@ -31,6 +31,12 @@ def algo(n):
         res += 1
     return res
 
+def hammingWeight(self, n: int) -> int:
+    count = 0
+    while n != 0:
+        count += n & 1
+        n >>= 1
+    return count
 
 if __name__ == '__main__':
     x = 11
