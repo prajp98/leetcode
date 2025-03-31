@@ -11,3 +11,12 @@ def numRabbits(self, answers: List[int]) -> int:
         else:
             dic[ans] += 1
     return res
+
+def numRabbits(self, answers: List[int]) -> int:
+    count=Counter(answers)
+    total=0
+    for n,c in count.items():
+        size=n+1
+        num=math.ceil(c/size)
+        total+=num*size
+    return total
