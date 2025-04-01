@@ -1,4 +1,4 @@
-    def intToRoman(self, num: int) -> str:
+def intToRoman(self, num: int) -> str:
         m={
 1000:"M",
 900:"CM",
