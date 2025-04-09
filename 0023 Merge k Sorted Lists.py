@@ -15,6 +15,11 @@ def mergeKLists(self, lists: List[Optional[ListNode]]) -> Optional[ListNode]:
         curr.next = l1 or l2
         return dummy.next
 
-    for i in range(1, len(lists)):
-        lists[i] = merge(lists[i - 1], lists[i])
-    return lists[-1]
+    while len(lists) > 1:
+        newList = []
+        for i in range(0, len(lists), 2):
+            l1 = lists[i]
+            l2 = lists[i + 1] if i + 1 < len(lists) else None
+            newList.append(merge(l1, l2))
+        lists = newList
+    return lists[0]
