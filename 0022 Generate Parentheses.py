@@ -1,6 +1,5 @@
 def generateParenthesis(self, n: int) -> List[str]:
     res = []
-
     def dfs(s, countl, countr):
         if len(s) == n * 2:
             res.append("".join(s))
@@ -12,6 +11,5 @@ def generateParenthesis(self, n: int) -> List[str]:
             s.append(")")
             dfs(s, countl, countr + 1)
             s.pop()
-
     dfs([], 0, 0)
     return res
