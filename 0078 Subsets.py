@@ -7,22 +7,19 @@ def iterative(nums):
 
 
 # 2. Backtracking     T:O(n*2ⁿ)     S:O(n)
-def backtrack(nums):
+def subsets(self, nums: List[int]) -> List[List[int]]:
     res = []
-    subset = []
 
-    def dfs(i):
-        if i >= len(nums):
-            res.append(subset.copy())
+    def dfs(i, path):
+        if i == len(nums):
+            res.append(path[:])
             return
-        # decision to include nums[i]
-        subset.append(nums[i])
-        dfs(i + 1)
-        # decision NOT to include nums[i]
-        subset.pop()
-        dfs(i + 1)
+        path.append(nums[i])
+        dfs(i + 1, path)
+        path.pop()
+        dfs(i + 1, path)
 
-    dfs(0)
+    dfs(0, [])
     return res
 
 
