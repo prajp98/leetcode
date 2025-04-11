@@ -1,6 +1,5 @@
 def permute(self, nums: List[int]) -> List[List[int]]:
     res = []
-
     def dfs(nums, cur):
         if not nums:
             res.append(cur[::])
@@ -10,6 +9,5 @@ def permute(self, nums: List[int]) -> List[List[int]]:
             cur.append(nums[i])
             dfs(newNums, cur)
             cur.pop()
-
     dfs(nums, [])
     return res
