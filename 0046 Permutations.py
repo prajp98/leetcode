@@ -1,6 +1,5 @@
 def permute(self, nums: List[int]) -> List[List[int]]:
     res = []
-
     def dfs(path):
         if len(path) == len(nums):
             res.append(path[:])
