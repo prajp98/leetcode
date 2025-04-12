@@ -16,3 +16,18 @@ def combinationSum(self, candidates: List[int], target: int) -> List[List[int]]:
 
     dfs(0, [], 0)
     return res
+
+def combinationSum(self, candidates: List[int], target: int) -> List[List[int]]:
+    res=[]
+    def dfs(start,total,l):
+        if total==target:
+            res.append(l[:])
+            return
+        if total>target:
+            return
+        for i in range(start,len(candidates)):
+            l.append(candidates[i])
+            dfs(i,total+candidates[i],l)
+            l.pop()
+    dfs(0,0,[])
+    return res
