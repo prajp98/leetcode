@@ -11,20 +11,15 @@ def closestValue(self, root: Optional[TreeNode], target: float) -> int:
     dfs(root)
     return min(values, key=lambda x: (abs(x - target), x))
 
-def closestValue(self, root: Optional[TreeNode], target: float) -> int:
-    res = root.val
 
-    def dfs(node):
-        nonlocal res
-        if not node:
-            return 0
-        if abs(target - node.val) == abs(target - res):
-            res = min(res, node.val)
-        if abs(target - node.val) < abs(target - res):
-            res = node.val
-        if target < node.val:
-            dfs(node.left)
+def closestValue(self, root: Optional[TreeNode], target: float) -> int:
+    closest = root.val
+    while root:
+        if abs(root.val - target) < abs(closest - target) or \
+                (abs(root.val - target) == abs(closest - target) and root.val < closest):
+            closest = root.val
+        if target < root.val:
+            root = root.left
         else:
-            dfs(node.right)
-    dfs(root)
-    return res
+            root = root.right
+    return closest
