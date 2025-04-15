@@ -14,3 +14,14 @@ def isSubtree(self, root: Optional[TreeNode], subRoot: Optional[TreeNode]) -> bo
         return True
 
     return dfs(root)
+
+
+def isSubtree(self, root: Optional[TreeNode], subRoot: Optional[TreeNode]) -> bool:
+    def serialize(node):
+        if not node:
+            return "N"
+        return "#" + str(node.val) + " " + serialize(node.left) + " " + serialize(node.right)
+
+    s = serialize(root)
+    t = serialize(subRoot)
+    return t in s
