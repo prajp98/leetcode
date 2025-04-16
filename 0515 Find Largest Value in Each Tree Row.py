@@ -1,7 +1,7 @@
 def largestValues(self, root: Optional[TreeNode]) -> List[int]:
-    if not root:
-        return []
     res = []
+    if not root:
+        return res
     q = deque([root])
     while q:
         maxi = float('-inf')
