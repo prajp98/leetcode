@@ -15,3 +15,24 @@ def connect(self, root: 'Node') -> 'Node':
                 q.append(node.right)
             prev = node
     return root
+
+def connect(self, root: 'Node') -> 'Node':
+    if root is None:
+        return None
+    head = root
+
+    while head:
+        dummy = Node()
+        cur = dummy
+        while head:
+            if head.left:
+                cur.next = head.left
+                cur = cur.next
+            if head.right:
+                cur.next = head.right
+                cur = cur.next
+
+            head = head.next
+        head = dummy.next
+
+    return root
