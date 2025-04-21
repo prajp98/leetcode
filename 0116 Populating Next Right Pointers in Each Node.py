@@ -32,3 +32,20 @@ def connect(self, root: 'Optional[Node]') -> 'Optional[Node]':
 
     dfs(root)
     return root
+
+def connect(self, root: 'Optional[Node]') -> 'Optional[Node]':
+    if not root:
+        return None
+
+    leftmost = root
+    while leftmost.left:
+        head = leftmost
+        while head:
+            # Connect children of head
+            head.left.next = head.right
+            if head.next:
+                head.right.next = head.next.left
+            head = head.next
+        leftmost = leftmost.left
+
+    return root
