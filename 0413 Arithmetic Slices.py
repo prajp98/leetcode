@@ -1,10 +1,12 @@
-def numberOfArithmeticSlices(A: List[int]) -> int:
+def numberOfArithmeticSlices(self, nums: List[int]) -> int:
+    if len(nums) < 3:
+        return 0
     count = 0
-    for s in range(len(A) - 2):
-        d = A[s + 1] - A[s]
-        for e in range(s + 2, len(A)):
-            if A[e] - A[e - 1] == d:
-                count += 1
-            else:
-                break
+    curr = 0
+    for i in range(2, len(nums)):
+        if nums[i] - nums[i - 1] == nums[i - 1] - nums[i - 2]:
+            curr += 1
+            count += curr
+        else:
+            curr = 0
     return count
