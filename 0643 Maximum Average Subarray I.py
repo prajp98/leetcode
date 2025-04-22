@@ -15,3 +15,4 @@ def findMaxAverage(self, nums: List[int], k: int) -> float:
         total = prefix[i] - prefix[i - k]
         max_avg = max(max_avg, total / k)
     return max_avg
+
