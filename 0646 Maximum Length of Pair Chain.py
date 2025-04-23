@@ -1,9 +1,9 @@
 def findLongestChain(self, pairs: List[List[int]]) -> int:
     pairs.sort(key=lambda x: x[1])
-    currEnd = float('-inf')
+    prevEnd = float('-inf')
     count = 0
     for pair in pairs:
-        if pair[0] > currEnd:
+        if pair[0] > prevEnd:
             count += 1
-            currEnd = pair[1]
+            prevEnd = pair[1]
     return count
