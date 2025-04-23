@@ -1,10 +1,12 @@
 def findContentChildren(self, g: List[int], s: List[int]) -> int:
     g.sort()
     s.sort()
-    res = 0
-    i = 0
-    while i < len(s) and res < len(g):
-        if s[i] >= g[res]:
-            res += 1
-        i += 1
-    return res
+    gp = 0
+    sp = 0
+    while sp < len(s) and gp < len(g):
+        # if satisfied,move both pointers
+        if s[sp] >= g[gp]:
+            gp += 1
+        # else next bigger cookie
+        sp += 1
+    return gp
