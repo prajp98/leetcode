@@ -1,5 +1,5 @@
 def canAttendMeetings(self, intervals: List[List[int]]) -> bool:
-    intervals.sort(key=lambda x: x[1])  # ✅ Sort by start time
+    intervals.sort(key=lambda x: x[1])
     if not intervals:
         return True
     prevEnd = intervals[0][1]
