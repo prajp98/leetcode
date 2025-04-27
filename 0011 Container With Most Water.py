@@ -9,17 +9,16 @@ def bruteForce(height):
 
 
 # 2. Two pointer     T:O(n)     S:O(1)
-def twoPointer(height):
+def twoPointer(self, height: List[int]) -> int:
     l, r = 0, len(height) - 1
-    res = 0
-
+    area = 0
     while l < r:
-        res = max(res, min(height[l], height[r]) * (r - l))
-        if height[l] < height[r]:
+        area = max(area, min(height[l], height[r]) * (r - l))
+        if height[l] <= height[r]:
             l += 1
         else:
             r -= 1
-    return res
+    return area
 
 
 if __name__ == '__main__':
