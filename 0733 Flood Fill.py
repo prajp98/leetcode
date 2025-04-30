@@ -1,15 +1,13 @@
 def floodFill(self, image: List[List[int]], sr: int, sc: int, color: int) -> List[List[int]]:
     rows, cols = len(image), len(image[0])
-    directions = [[0, 1], [1, 0], [-1, 0], [0, -1]]
-    visit = set()
+    directions = [[1, 0], [-1, 0], [0, 1], [0, -1]]
 
-    def dfs(r, c, first):
-        if r < 0 or r >= rows or c < 0 or c >= cols or image[r][c] != first or (r, c) in visit:
+    def dfs(r, c, src):
+        if r < 0 or c < 0 or r >= rows or c >= cols or image[r][c] == color or image[r][c] != src:
             return
         image[r][c] = color
-        visit.add((r, c))
         for dr, dc in directions:
-            dfs(r + dr, c + dc, first)
+            dfs(r + dr, c + dc, src)
 
     dfs(sr, sc, image[sr][sc])
     return image
