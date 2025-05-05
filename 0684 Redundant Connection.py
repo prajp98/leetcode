@@ -18,3 +18,17 @@ def findRedundantConnection(self, edges: List[List[int]]) -> List[int]:
         graph[u].append(v)
         graph[v].append(u)
     return None
+
+def findRedundantConnection(self, edges: List[List[int]]) -> List[int]:
+    def findLeader(v):
+        if parent[v] != v:
+            parent[v] = findLeader(parent[v])
+        return parent[v]
+    parent = list(range(len(edges) + 1))
+    for a, b in edges:
+        leadera = findLeader(a)
+        leaderb = findLeader(b)
+        if leadera == leaderb:
+            return [a, b]
+        parent[leadera] = leaderb
+    return []
