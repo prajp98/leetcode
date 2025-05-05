@@ -15,3 +15,22 @@ class Solution:
                         elif color[nei] == color[current]:
                             return False
         return True
+
+def isBipartite(self, graph: List[List[int]]) -> bool:
+    color = {}
+
+    def dfs(node, c):
+        if node in color:
+            return color[node] == c
+        color[node] = c
+        next_color = "Blue" if c == "Red" else "Red"
+        for neighbor in graph[node]:
+            if not dfs(neighbor, next_color):
+                return False
+        return True
+
+    for i in range(len(graph)):
+        if i not in color:
+            if not dfs(i, "Red"):
+                return False
+    return True
