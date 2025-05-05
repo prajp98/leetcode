@@ -1,0 +1,20 @@
+def findRedundantConnection(self, edges: List[List[int]]) -> List[int]:
+    graph = defaultdict(list)
+
+    def path(u, v):
+        if u == v:
+            return True
+        visit.add(u)
+        for nei in graph[u]:
+            if nei not in visit:
+                if path(nei, v):
+                    return True
+        return False
+
+    for u, v in edges:
+        visit = set()
+        if path(u, v):
+            return [u, v]
+        graph[u].append(v)
+        graph[v].append(u)
+    return None
