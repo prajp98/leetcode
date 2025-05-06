@@ -12,3 +12,10 @@ def canMeasureWater(self, x: int, y: int, z: int) -> bool:
         return dfs(s + x) or dfs(s - x) or dfs(s + y) or dfs(s - y)
 
     return dfs(0)
+
+def canMeasureWater(self, x: int, y: int, z: int) -> bool:
+    if z > x + y:
+        return False
+    if z == 0:
+        return True
+    return z % gcd(x, y) == 0
