@@ -3,8 +3,8 @@ def canAttendMeetings(self, intervals: List[List[int]]) -> bool:
     if not intervals:
         return True
     prevEnd = intervals[0][1]
-    for i in range(1, len(intervals)):
-        if intervals[i][0] < prevEnd:
+    for interval in intervals[1:]:
+        if interval[0] < prevEnd:
             return False
-        prevEnd = intervals[i][1]
+        prevEnd = interval[1]
     return True
