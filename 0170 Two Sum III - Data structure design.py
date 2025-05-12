@@ -11,9 +11,9 @@ class TwoSum:
 
     def find(self, value: int) -> bool:
         for num in self.nums.keys():
-            comple = value - num
+            comp = value - num
             if num != comple:
-                if comple in self.nums:
+                if comp in self.nums:
                     return True
             elif self.nums[num] > 1:
                 return True
