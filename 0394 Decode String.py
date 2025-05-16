@@ -1,15 +1,17 @@
 def decodeString(self, s: str) -> str:
     stack = []
+    res = ""
+    num = 0
+
     for ch in s:
-        if ch != "]":
-            stack.append(ch)
+        if ch.isdigit():
+            num = num * 10 + int(ch)
+        elif ch == '[':
+            stack.append((res, num))
+            res, num = "", 0
+        elif ch == ']':
+            prev, c = stack.pop()
+            res = prev + res * c
         else:
-            cur = ""
-            while stack and stack[-1] != "[":
-                cur = stack.pop() + cur
-            stack.pop()
-            num = ""
-            while stack and stack[-1].isdigit():
-                num = stack.pop() + num
-            stack.append(cur * int(num))
-    return "".join(stack)
+            res += ch
+    return res
