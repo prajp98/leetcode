@@ -16,3 +16,17 @@ def findRightInterval(self, intervals: List[List[int]]) -> List[int]:
                 l = mid + 1
         res.append(i)
     return res
+
+def findRightInterval(self, intervals: List[List[int]]) -> List[int]:
+    n = len(intervals)
+    starti = sorted((start, i) for i,(start,_) in enumerate(intervals))
+    res = []
+    for interval in intervals:
+        end = interval[1]
+        # Use binary search to find first start >= end
+        i = bisect_left(starti, (end,))
+        if i < n:
+            res.append(starti[i][1])
+        else:
+            res.append(-1)
+    return res
