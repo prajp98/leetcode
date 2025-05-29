@@ -20,3 +20,14 @@ def numWays(self, n: int, k: int) -> int:
     for i in range(3, n + 1):
         dp[i] = (k - 1) * (dp[i - 1] + dp[i - 2])
     return dp[n]
+
+def numWays(self, n: int, k: int) -> int:
+    if n == 1:
+        return k
+    two = k
+    one = k * k
+    for i in range(3, n + 1):
+        t = (k - 1) * (one + two)
+        two = one
+        one = t
+    return one
