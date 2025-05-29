@@ -127,16 +127,16 @@ def minCost_optimized(costs):
         - Only store costs for previous house (3 variables)
         - No extra space scaling with input size
     """
+
     if not costs:
         return 0
-    n = len(costs)
-    dp = [0, 0, 0]
-    for i in range(n):
-        dp0 = costs[i][0] + min(dp[1], dp[2])
-        dp1 = costs[i][1] + min(dp[0], dp[2])
-        dp2 = costs[i][2] + min(dp[0], dp[1])
-        dp = [dp0, dp1, dp2]
-    return min(dp)
+
+    for i in range(1, len(costs)):
+        costs[i][0] += min(costs[i-1][1], costs[i-1][2])
+        costs[i][1] += min(costs[i-1][0], costs[i-1][2])
+        costs[i][2] += min(costs[i-1][0], costs[i-1][1])
+
+    return min(costs[-1])
 
 
 # Test function to verify all implementations
