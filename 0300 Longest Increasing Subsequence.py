@@ -36,16 +36,14 @@ def lengthOfLIS_dp(nums: list[int]) -> int:
 # Time Complexity: O(n log n) where n is the length of nums
 # Space Complexity: O(n) for the tails array
 def lengthOfLIS_binary(nums: list[int]) -> int:
-    sub = []
-
-    for num in nums:
-        i = bisect.bisect_left(sub, num)  # Find the first element >= num
-        if i == len(sub):
-            sub.append(num)  # Append if num is the largest so far
+    res = []
+    for x in nums:
+        i = bisect_left(res, x)
+        if i == len(res):
+            res.append(x)
         else:
-            sub[i] = num  # Replace to keep subsequence minimal
-
-    return len(sub)
+            res[i] = x
+    return len(res)
 
 
 # Example inputs and outputs
